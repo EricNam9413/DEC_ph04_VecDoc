@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Index({ auth, Rule, Documents }) {
     const styles = {
@@ -145,17 +146,32 @@ export default function Index({ auth, Rule, Documents }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {Documents.map(document => (
-                                <tr>
-                                    <td>{document.status}</td>
-                                    <td>{ document.note }</td>
-                                    <td>{document.user_name}</td>
-                                    <td>{new Date(document.updated_at).toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>
-                                    <td>{ document.version}</td>
-                                    <td><button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                                        onClick={() => loadPdf(document.path)}><i class="bi bi-filetype-pdf" style={{ fontSize: '1.5rem' }}></i></button></td>
-                                </tr>
-                            ))}
+                            {Documents.map(document => {
+                                if (document.status == '公開' || auth.user.role == 2) {
+                                    return (
+                                        <tr>
+                                            {auth.user.role == 2 && (
+                                                <td><a href={route('document.status_change', document.id)}>{document.status}</a></td>
+                                            )}
+                                            {auth.user.role == 1 && (
+                                                <td>{document.status}</td>
+                                            )}
+                                            <td>{document.note}</td>
+                                            <td>{document.user_name}</td>
+                                            <td>{new Date(document.updated_at).toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>
+                                            {/* document.versionを小数点以下2桁で表示 */}
+                                            <td>{document.version.toFixed(2)}</td>
+                                            {auth.user.role == 2 && (
+                                                <div class="flex justify-end">
+                                                    <a href={route('version_reverse', document.id)}>これを最新バージョンにする</a>
+                                                </div>
+                                            )}
+                                            <td><button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                                                onClick={() => loadPdf(document.path)}><i class="bi bi-filetype-pdf" style={{ fontSize: '1.5rem' }}></i></button></td>
+                                        </tr>
+                                    );
+                                }
+                            })}
                         </tbody>
                     </table>
                     <div style={styles.body}>

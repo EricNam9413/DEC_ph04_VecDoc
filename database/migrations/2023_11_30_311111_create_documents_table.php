@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('enactment_date');
             $table->text('note');
             $table->text('path')->nullable();
-            $table->string('status')->default('レビュー中');
+            $table->string('status')->default('非公開');
             // $table->string('version')->default('1.0');
             $table->timestamps();
         });

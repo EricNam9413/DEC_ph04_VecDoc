@@ -144,7 +144,7 @@ export default function Index({ auth, Rules }) {
                     <form className="mb-6 w-40 flex items-center" onSubmit={handleSearchSubmit}>
                         <div className="flex flex-col mb-4">
                             <label htmlFor="keyword" className="block text-sm font-medium text-gray-700">
-                                ルール名検索
+                                ルール名カテゴリ名、作成者から検索できます
                             </label>
                             <input
                                 id="keyword"

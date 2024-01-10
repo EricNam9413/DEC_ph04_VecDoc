@@ -62,11 +62,11 @@ class RuleController extends Controller
         //$Documents = Rule::query()->find($id)->ruleDocuments()->orderBy('created_at', 'asc')->get();
         //return response()->view('rule.show', compact('Documents', 'id'));
         
-        //Ruleを取得
+        // Ruleを取得
         $Rule = Rule::query()->find($id);
         
         // Genre_nameを$Ruleに追加
-        // $Rule->genre_name = $Rule->genre->name;
+        $Rule->genre_name = $Rule->genre->name;
 
         // // Documentを取得
         // $Documents = Rule::query()->find($id)->ruleDocuments()->orderBy('created_at', 'asc')->get();
@@ -80,7 +80,7 @@ class RuleController extends Controller
         // versionをつける
         // VersionHistoryモデルのgetDocumentsWithVersionメソッド$idで呼び出す
         $Documents = VersionHistory::getDocumentsWithVersion($id);
-
+        
         //Inertiaで画面遷移
         return Inertia::render('Rule/Show', [
             'Rule' => $Rule,
@@ -140,7 +140,16 @@ class RuleController extends Controller
         //$search = $request->input('search');
         $Rules = Rule::query()
             ->where('name', 'like', "%{$search}%")
-            ->orWhere('description', 'like', "%{$search}%")
+            // genre_nameが検索ワードに含まれているか
+            ->orWhereHas('genre', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            // user_nameが検索ワードに含まれているか
+            ->orWhereHas('documents', function ($query) use ($search) {
+                $query->whereHas('user', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
             ->get();
         // Genere_nameを$Rulesに追加
         foreach ($Rules as $Rule) {

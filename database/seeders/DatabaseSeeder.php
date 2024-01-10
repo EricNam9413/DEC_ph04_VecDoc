@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);        
         DB::table('document_rule')->insert([
-            'rule_id' => 1,
+            'rule_id' => 4,
             'document_id' => 4,
             // 作成時のタイムスタンプ
             'created_at' => now(),

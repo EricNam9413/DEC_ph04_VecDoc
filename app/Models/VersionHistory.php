@@ -12,8 +12,8 @@ class VersionHistory extends Model
     public static function getDocumentsWithVersion(string $rule_id){
 
         // rule_idをもとに、中間テーブルからdocument_idを取得
+        // 本当は　select * from rule_document where rule_id = $rule_id;
         $document_ids = Rule::find($rule_id)->documents()->pluck('document_id');
-        
         // document_idsが1,2,4,2の場合versionが1.0, 2.0, 3.0, 3.1となるように
         // 初めてのversionの場合は1増やし、過去にあるversionの場合は0.1増やす
         // versionを付与する

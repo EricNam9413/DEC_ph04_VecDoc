@@ -100,4 +100,17 @@ class DocumentController extends Controller
         //
     }
     
+    /**
+     * status_change
+     */
+    public function status_change(string $id){
+        $document = Document::find($id);
+        if ($document->status == "公開"){
+            $document->status = "非公開";
+        } else {
+            $document->status = "公開";
+        }
+        $document->save();
+        return Inertia::location(route('rule.show', $document->rule_id));
+    }
 }
