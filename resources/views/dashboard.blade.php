@@ -11,12 +11,6 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
-                <!-- バージョン管理一覧のリンクを追加 -->
-                <div class="mb-4">
-                    <a href="/show-pdf" class="p-6 text-gray-900 dark:text-gray-100">
-                        {{ __('Version管理一覧') }}
-                    </a>
-                </div>
             </div>
         </div>
     </div>

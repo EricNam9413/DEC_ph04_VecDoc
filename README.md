@@ -1,66 +1,105 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# データエンジニアカタパルト Phase04 チーム VecDoc の制作物
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 使用技術
+- Laravel sail + docker
+- React
+- Azure Blob Storage
+- My SQL
 
-## About Laravel
+## 環境構築
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+codespaceの場合 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<img src="public/imgs/codespace_route.png" width="500">  
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+[create codespace on main]をクリックで終了
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Localの場合 
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+上から順番に叩く。
 
-### Premium Partners
+```
+git clone git@github.com:EricNam9413/DEC_ph04_VecDoc.git
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+cd DEC_ph04_VecDoc
 
-## Contributing
+mkdir -p storage/framework/cache/data/
+mkdir -p storage/framework/app/cache
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
 
-## Code of Conduct
+cp .env.example .env
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+./vendor/bin/sail up -d
 
-## Security Vulnerabilities
+./vendor/bin/sail php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+./vendor/bin/sail composer require laravel/breeze --dev
+./vendor/bin/sail php artisan breeze:install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+./vendor/bin/sail php artisan migrate:fresh
+./vendor/bin/sail php artisan db:seed
+
+```
+breezeについてはReactのssrを選択してください。
+
+また、Seederファイルやmigrationファイルが編集されたものをpullしたときは
+```
+./vendor/bin/sail php artisan migrate:fresh
+./vendor/bin/sail php artisan db:seed
+```
+
+Breezeのインストールの際に既存のルーティングが消えてしまいます。([参考](https://biz.addisteria.com/breeze_routes_disappear/))
+
+現段階では、VScodeの機能などを用いて手動で戻してください。
+
+Reactについては
+```
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run dev
+```
+を実行する。
+上で./vendor/bin/sail php artisan key:generateまで行い先の2行を実行してもよい。
+
+
+## 制作物説明概要
+
+-私たちのチームは、オルターブース社のように複雑で多様な社内規範と規約を持つ企業が直面する課題に対応するため、バージョン管理機能を備えた公開システムを開発しました。
+
+## 解決したい課題
+
+-オルターブース社は内部統制を実施する過程で、複雑で多様な社内規範と規約を持っています。これらの規範や規約が多いため、従業員が必要な情報を効果的に探すのが難しい問題が発生しています。
+
+（問題例：育児休業に関する規定で許可されている休暇日数を探すなど、具体的な情報へのアクセスが難しい。）
+
+-膨大な量のデータを安全かつ効率的に保存・管理する必要がある
+
+-文書が継続的に更新される中で、以前のバージョンとの一貫性を保つことが不可欠
+
+-大量の文書の中から必要な文書を迅速かつ正確に見つける方法か必要（例：github）
+
+
+## 解決策
+
+-このシステムはアジュールクラウドサービスとの連携により大容量ファイルの保存を容易にし、権限分割により管理者と非管理者間でのファイルアクセスを可能にします。
+
+-文書ごとにカテゴリーを分け、より使いやすい文書アクセスを提供します。
+
+
+## 実装予定の機能・画面
+
+-今後は、RAGを利用した-ベクター検索やデプロイメントを通じてシステムをさらに進化させる計画です。
+
+このシステムは複雑な社内規範を持つ多くの企業に役立つと考えています。
