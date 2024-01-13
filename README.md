@@ -8,7 +8,7 @@
 
 ## 環境構築
 codespaceの場合  
-<img src="{{ asset('imgs/codespace_route.png') }}" alt="Description">
+<img src="imgs/codespace_route.png" width="500">  
 
 ## 制作物説明概要
 
