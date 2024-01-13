@@ -8,12 +8,18 @@
 
 ## 環境構築
 
-codespaceの場合  <br>
-<img src="public/imgs/codespace_route.png" width="500">  <br>
+codespaceの場合 
+
+
+<img src="public/imgs/codespace_route.png" width="500">  
+
+
 [create codespace on main]をクリックで終了
 
 
-Localの場合 <br>
+Localの場合 
+
+
 上から順番に叩く。
 
 ```
