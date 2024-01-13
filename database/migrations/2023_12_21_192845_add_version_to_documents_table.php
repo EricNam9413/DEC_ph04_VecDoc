@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('documents', function (Blueprint $table) {
-            $table->string('version')->default('1'); // 문자열 기본값으로 수정
+            $table->string('version')->default('1'); // Modify String to Default
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('documents', function (Blueprint $table) {
-            $table->dropColumn('version'); // version 필드 제거
+            $table->dropColumn('version'); // Remove version field
         });
     }
 };
